@@ -1,5 +1,17 @@
+import Amplify, { Auth } from 'aws-amplify';
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+
 import logo from './logo.svg';
 import './App.css';
+
+Amplify.configure({
+  Auth: {
+    region: "us-east-1",
+    userPoolId: "us-east-1_6d4nPcCXJ",
+    userPoolWebClientId: "2acniojoio0a4js65q25f6mq98",
+    mandatorySignIn: true,
+  }
+})
 
 function App() {
   return (
@@ -22,4 +34,4 @@ function App() {
   );
 }
 
-export default App;
+export default withAuthenticator(App);
