@@ -7,8 +7,8 @@ import './App.css';
 Amplify.configure({
   Auth: {
     region: "us-east-1",
-    userPoolId: "us-east-1_6d4nPcCXJ",
-    userPoolWebClientId: "2acniojoio0a4js65q25f6mq98",
+    userPoolId: "us-east-1_EuS36xmVS",
+    userPoolWebClientId: "4h8suaci18t02g04po14blef9k",
     mandatorySignIn: true,
   }
 })
