@@ -11,9 +11,11 @@ Amplify.configure({
     userPoolWebClientId: "4h8suaci18t02g04po14blef9k",
     mandatorySignIn: true,
   }
-})
+});
 
-const query = () => {
+const query = async () => {
+  const session = await Auth.currentSession();
+  console.log(session);
   const _query = `
     query {
       maskedAddresses {
@@ -27,7 +29,7 @@ const query = () => {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'x-api-key': process.env.REACT_APP_PRIVATELY_API_KEY
+      'Authorization': `${session.getIdToken().getJwtToken()}`,
     },
     body: JSON.stringify({
       query: _query
