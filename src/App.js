@@ -1,4 +1,4 @@
-import Amplify, { Auth } from 'aws-amplify';
+import Amplify, { API, graphqlOperation, Auth } from 'aws-amplify';
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 
 import logo from './logo.svg';
@@ -12,6 +12,32 @@ Amplify.configure({
     mandatorySignIn: true,
   }
 })
+
+const query = () => {
+  const _query = `
+    query {
+      maskedAddresses {
+        id
+        address
+      }
+    }
+  `
+  fetch(process.env.REACT_APP_PRIVATELY_API_ENDPOINT, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'x-api-key': process.env.REACT_APP_PRIVATELY_API_KEY
+    },
+    body: JSON.stringify({
+      query: _query
+    })
+  })
+    .then(r => r.json())
+    .then(data => console.log('data returned:', data));
+}
+
+query();
 
 function App() {
   return (
