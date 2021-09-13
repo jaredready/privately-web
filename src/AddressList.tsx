@@ -19,7 +19,11 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function AddressList() {
+export interface AddressListProps {
+  addresses: Array<string>
+}
+
+export default function AddressList(props: AddressListProps) {
   const classes = useStyles();
   const [checked, setChecked] = React.useState(['wifi']);
 
@@ -38,20 +42,22 @@ export default function AddressList() {
 
   return (
     <List subheader={<ListSubheader>Relay Addresses</ListSubheader>} className={classes.root}>
-      <ListItem>
-        <ListItemIcon>
-          <EmailIcon />
-        </ListItemIcon>
-        <ListItemText id="switch-list-label-enabled" primary="1234@relay.privately.com" />
-        <ListItemSecondaryAction>
-          <Switch
-            edge="end"
-            onChange={handleToggle('enabled')}
-            checked={checked.indexOf('enabled') !== -1}
-            inputProps={{ 'aria-labelledby': 'switch-list-label-enabled' }}
-          />
-        </ListItemSecondaryAction>
-      </ListItem>
+      {props.addresses.map(address => (
+        <ListItem>
+          <ListItemIcon>
+            <EmailIcon />
+          </ListItemIcon>
+          <ListItemText id={"switch-list-label-enabled-" + address} primary={address} />
+          <ListItemSecondaryAction>
+            <Switch
+              edge="end"
+              onChange={handleToggle(address)}
+              checked={checked.indexOf(address) !== -1}
+              inputProps={{ "aria-labelledby": "switch-list-label-enabled-" + address }}
+            />
+          </ListItemSecondaryAction>
+        </ListItem>
+      ))}
     </List>
   );
 }
