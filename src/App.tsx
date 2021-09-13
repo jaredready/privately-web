@@ -1,8 +1,10 @@
-import Amplify, { API, graphqlOperation, Auth } from 'aws-amplify';
-import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+import Amplify, { Auth } from 'aws-amplify';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 
-import logo from './logo.svg';
+import Header from './Header';
+import AddressList from './AddressList';
 import './App.css';
+import { Container } from '@material-ui/core';
 
 Amplify.configure({
   Auth: {
@@ -24,6 +26,7 @@ const query = async () => {
       }
     }
   `
+  // @ts-ignore
   fetch(process.env.REACT_APP_PRIVATELY_API_ENDPOINT, {
     method: 'POST',
     headers: {
@@ -44,20 +47,10 @@ query();
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Container maxWidth="lg">
+        <AddressList />
+      </Container>
     </div>
   );
 }
