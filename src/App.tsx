@@ -38,25 +38,28 @@ const getMaskedAddresses = async () => {
     body: JSON.stringify({
       query: _query
     })
-  })
+  });
+
+  return (await response.json()).data.maskedAddresses;
 }
 
-// query();
-
-function App() {
-  const [maskedAddresses, setMaskedAddresses] = useState();
+const App = () => {
+  const [maskedAddresses, setMaskedAddresses] = useState([]);
 
   useEffect(() => {
-    if (!maskedAddresses) {
-      getMaskedAddresses();
-    }
-  }, []);
+    getMaskedAddresses().then((value) => {
+      const addresses = value.map((addr: any) => {
+        return addr.address;
+      })
+      setMaskedAddresses(addresses)
+    })
+  }, maskedAddresses)
 
   return (
     <div className="App">
       <Header />
       <Container maxWidth="lg">
-        <AddressList addresses={["badf00d@relay.privately.sh", "123@relay.privately.sh"]}/>
+        <AddressList addresses={maskedAddresses}/>
       </Container>
     </div>
   );
